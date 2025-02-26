@@ -25,7 +25,10 @@ const Register = () => {
     e.preventDefault();
     e.stopPropagation();
     console.log("data", data);
-    const URL = `${process.env.REACT_APP_BACKEND_URL}/api/register`;
+    const URL = `${import.meta.env.VITE_BACKEND_URL}/api/register`;
+
+    console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
     try {
       const response = await axios.post(URL, data);
       toast.success(response.data.message);
@@ -38,7 +41,8 @@ const Register = () => {
         navigate("/email");
       }
     } catch (error) {
-      toast.error(error?.response.data?.message);
+      console.error("Error:", error.response || error.message);
+      toast.error(error?.response?.data?.message || "Something went wrong!");
     }
   };
 
