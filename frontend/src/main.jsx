@@ -1,10 +1,64 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import React from "react";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
+import Register from "./Pages/Register.jsx";
+import CheckEmail from "./Pages/CheckEmail.jsx";
+import CheckPass from "./Pages/CheckPass.jsx";
+import Home from "./Pages/Home.jsx";
+import Message from "./Components/Message.jsx";
+import AuthLayouts from "./Layout/index.jsx";
 
-createRoot(document.getElementById('root')).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "register",
+        element: (
+          <AuthLayouts>
+            <Register />
+          </AuthLayouts>
+        ),
+      },
+      {
+        path: "email",
+        element: (
+          <AuthLayouts>
+            <CheckEmail />
+          </AuthLayouts>
+        ),
+      },
+      {
+        path: "password",
+        element: (
+          <AuthLayouts>
+            <CheckPass />
+          </AuthLayouts>
+        ),
+      },
+      {
+        path: "",
+        element: <Home />,
+        children: [
+          {
+            path: ":userId",
+            element: <Message />,
+          },
+        ],
+      },
+    ],
+  },
+]);
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  </StrictMode>
+);
