@@ -27,7 +27,7 @@ const conversationSchema = new mongoose.Schema({
     required : true,
     ref : 'User'
   },
-  reciever : {
+  receiver : {
     type : mongoose.Schema.ObjectId,
     required : true,
     ref : 'User'

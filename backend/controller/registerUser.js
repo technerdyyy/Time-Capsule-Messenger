@@ -20,7 +20,6 @@ async function registerUser(request,response){
         const payload = {
             name,
             email,
-            profile_pic,
             password : hashpassword
         }
 

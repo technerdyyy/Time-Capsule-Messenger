@@ -7,7 +7,7 @@ const cookiesParser = require('cookie-parser')
 
 const app = express()
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL,  
     credentials: true 
 }))
 app.use(express.json()) 
@@ -24,7 +24,8 @@ app.get('/',(request, response)=>{
 //api endpoints
 app.use('/api',router)
 
-connectDB().then(()=>{
+connectDB().then(() => {
+  console.log("mongodb connection successful")
 app.listen(PORT, ()=>{
     console.log("server running at" + PORT)
 })
