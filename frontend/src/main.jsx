@@ -18,7 +18,7 @@ import { store } from "./redux/store";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+
     children: [
       {
         path: "register",
