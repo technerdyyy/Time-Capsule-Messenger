@@ -11,6 +11,7 @@ import CheckPass from "./Pages/CheckPass.jsx";
 import Home from "./Pages/Home.jsx";
 import Message from "./Components/Message.jsx";
 import AuthLayouts from "./Layout/index.jsx";
+import Forgotpassword from "./Pages/Forgotpassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "forgot-password",
+        element: (
+          <AuthLayouts>
+            <Forgotpassword />
+          </AuthLayouts>
+        ),
+      },
+      {
         path: "",
         element: <Home />,
         children: [
@@ -57,8 +66,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <RouterProvider router={router}></RouterProvider>
   </StrictMode>
 );
