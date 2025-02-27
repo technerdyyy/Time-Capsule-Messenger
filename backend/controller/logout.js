@@ -17,4 +17,4 @@ async function logout(request,response){
     }
 }
 
-module.exports = logout
+module.exports = logout;

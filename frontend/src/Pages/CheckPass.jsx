@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import userImg from "../assets/user.png";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../redux/userSlice";
 
 const CheckPass = () => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState({
+    password: "",
+    userId: "",
+  });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Retrieve userId from localStorage or sessionStorage (set during email verification)
   const userId = localStorage.getItem("userId");
@@ -36,8 +41,13 @@ const CheckPass = () => {
       toast.success(response.data.message);
 
       if (response.data.success) {
-        localStorage.setItem("token", response.data.token); // Store auth token if needed
-        navigate("/"); // Redirect to home page
+        dispatch(setToken(response?.data?.token));
+        localStorage.setItem("token", response?.data?.token);
+
+        setPassword({
+          password: "",
+        });
+        navigate("/");
       }
     } catch (error) {
       console.error("Error:", error.response || error.message);
