@@ -7,11 +7,12 @@ const cookiesParser = require('cookie-parser')
 
 const app = express()
 app.use(cors({
-  origin: process.env.FRONTEND_URL|| "http://localhost:5174",  
+  origin: process.env.FRONTEND_URL|| "http://localhost:5173",  
     credentials: true 
 }))
-app.use(express.json()) 
 app.use(cookiesParser())
+app.use(express.json()) 
+
 
 const PORT = process.env.PORT || 8080
 
