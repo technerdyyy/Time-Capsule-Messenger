@@ -14,6 +14,7 @@ import AuthLayouts from "./Layout/index.jsx";
 import Forgotpassword from "./Pages/Forgotpassword.jsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -54,8 +55,12 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <Home />,
+        element: <ProtectedRoute />,
         children: [
+          {
+            path: "",
+            element: <Home />,
+          },
           {
             path: ":userId",
             element: <Message />,

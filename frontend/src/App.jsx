@@ -1,12 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import "./index.css";
 import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
     <>
-      <Toaster />
+      <Toaster position="top-right" reverseOrder={false} />
       <main>
         <Outlet />
       </main>
