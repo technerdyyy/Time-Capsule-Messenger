@@ -1,35 +1,40 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
+
+const getUserFromLocalStorage = () => {
+  try {
+    const user = localStorage.getItem("user");
+    return user && user !== "undefined" ? JSON.parse(user) : null;
+  } catch (error) {
+    console.error("Error parsing user from localStorage:", error);
+    return null;
+  }
+};
 
 const initialState = {
-    _id:"",
- name : "",
- email : "",
- token:"",
-}
+  user: getUserFromLocalStorage(),
+  token: localStorage.getItem("token") !== "undefined" ? localStorage.getItem("token") : null,
+};
 
-export const userSlice = createSlice({
-  name: 'user',
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
-    setUser: (state,action)=>{
-        state.id = action.payload._id
-        state.name = action.payload.name
-        state.email = action.payload.email
+    setUser: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload)); // Store user safely
     },
-    setToken : (state,action)=>{
-        state.token = action.payload
+    setToken: (state, action) => {
+      state.token = action.payload;
+      localStorage.setItem("token", action.payload); // Store token safely
     },
-    logout : (state,action)=>{
-        state.id = ""
-        state.name = ""
-        state.email = ""
-
-    }
-   
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    },
   },
-})
+});
 
-
-export const { setUser, setToken , logout } = userSlice.actions
-
-export default userSlice.reducer
+export const { setUser, setToken, logout } = userSlice.actions;
+export default userSlice.reducer;
