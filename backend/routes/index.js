@@ -6,6 +6,7 @@ const checkEmail = require("../controller/checkEmail");
 const checkPassword = require("../controller/checkPassword");
 const userDetails = require("../controller/userDetails");
 const logout = require("../controller/logout");
+const searchUser = require("../controller/searchUser");
 
 const router = express.Router();
 
@@ -54,5 +55,8 @@ router.post("/update-user", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+//search-user
+router.post("/search-user", searchUser)
 
 module.exports = router;
