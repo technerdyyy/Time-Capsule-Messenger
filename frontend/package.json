@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
-    "axios": "^1.8.1",
+    "axios": "^1.8.3",
     "dotenv": "^16.4.7",
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",

@@ -4,6 +4,8 @@ require('dotenv').config()
 const connectDB = require('./config/connectDB')
 const router = require('./routes/index')
 const cookiesParser = require('cookie-parser')
+const messageRoutes = require("./routes/messages");
+const startCronJob = require("./cronJobs/sendScheduledMessages");
 
 const app = express()
 app.use(cors({
@@ -24,6 +26,8 @@ app.get('/',(request, response)=>{
 
 //api endpoints
 app.use('/api',router)
+
+app.use("/api", messageRoutes);
 
 connectDB().then(() => {
   console.log("mongodb connection successful")

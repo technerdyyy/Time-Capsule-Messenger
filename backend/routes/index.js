@@ -1,13 +1,14 @@
 const express = require("express");
+const Message = require("../models/Message");
 const User = require("../models/UserModel"); // Using Mongoose Model
-
 const registerUser = require("../controller/registerUser");
 const checkEmail = require("../controller/checkEmail");
-const checkPassword = require("../controller/checkPassword");
+const  checkPassword  = require("../controller/checkPassword");
 const userDetails = require("../controller/userDetails");
 const logout = require("../controller/logout");
 const searchUser = require("../controller/searchUser");
 
+// const authenticateUser = require("../controller/checkPassword");
 const router = express.Router();
 
 // Create user API
@@ -55,6 +56,7 @@ router.post("/update-user", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 //search-user
 router.post("/search-user", searchUser)
