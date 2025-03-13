@@ -4,8 +4,9 @@ import Spinner from "./Spinner";
 import SearchUserCard from "./SearchUserCard";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { IoMdClose } from "react-icons/io";
 
-const SearchUser = () => {
+const SearchUser = ({ onClose }) => {
   const [searchUser, setSearchUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
@@ -51,17 +52,27 @@ const SearchUser = () => {
             <p className="text-center text-slate-500">no user found!</p>
           )}
           {loading && (
-            <p>
-              <Spinner />
-            </p>
+            // <p>
+            <Spinner />
+            //</p>
           )}
 
           {searchUser.length !== 0 &&
             !loading &&
             searchUser.map((user, index) => {
-              return <SearchUserCard key={user._id} user={user} />;
+              return (
+                <SearchUserCard key={user._id} user={user} onClose={onClose} />
+              );
             })}
         </div>
+      </div>
+      <div
+        className="absolute top-0 right-0 text-2xl p-2 lg:text-4xl hover:text-[#E1E5F2]"
+        onClick={onClose}
+      >
+        <button>
+          <IoMdClose />
+        </button>
       </div>
     </div>
   );

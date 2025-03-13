@@ -1,15 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const SearchUserCard = ({ user }) => {
+const SearchUserCard = ({ user, onClose }) => {
   return (
-    <div className="p-2 lg:p-4 border border-transparent border-b-slate-200 hover:border-blue-800">
-      <div>
+    <Link to={"/" + user?._id} onClick={onClose}>
+      <div className="p-2 lg:p-3">
         <div className="font-semibold text-ellipsis line-clamp-1">
           {user?.name}
         </div>
         <p className="text-sm text-ellipsis line-clamp-1">{user?.email}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

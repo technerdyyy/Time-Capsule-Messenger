@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../redux/userSlice";
 import { LuArrowUpLeft } from "react-icons/lu";
 import SearchUser from "./SearchUser";
+import { logout } from "../redux/userSlice";
 
 const Sidebar = () => {
   const user = useSelector((state) => state?.user);
@@ -18,18 +19,22 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(logout());
+    navigate("/email");
+    localStorage.clear();
+
     // Dispatch to reset Redux state
 
-    dispatch(setToken(null)); // Clear token from Redux
-    dispatch(setUser(null)); // Clear user data from Redux
+    // dispatch(setToken(null)); // Clear token from Redux
+    // dispatch(setUser(null)); // Clear user data from Redux
 
-    // Clear data from localStorage
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userId");
+    // // Clear data from localStorage
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("userId");
 
-    // Redirect to email page
-    navigate("/email", { replace: true });
+    // // Redirect to email page
+    // navigate("/email", { replace: true });
   };
 
   return (
