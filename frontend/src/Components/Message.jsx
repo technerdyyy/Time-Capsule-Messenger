@@ -13,7 +13,7 @@ const Message = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/schedule-message`,
         {
-          sender: "", // Replace with logged-in user's email dynamically
+          sender: "", 
           recipient,
           subject,
           body,
