@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 const Message = () => {
-  const [recipient, setRecipient] = useState("");
+  const location = useLocation();
+  const recipientEmail = location.state?.recipientEmail || "";
+
+  const [recipient, setRecipient] = useState(recipientEmail);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
@@ -13,7 +17,6 @@ const Message = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/schedule-message`,
         {
-          sender: "",
           recipient,
           subject,
           body,
@@ -38,9 +41,10 @@ const Message = () => {
       <input
         type="email"
         placeholder="Recipient Email"
-        className="p-2 border rounded mb-2 w-80"
+        className="p-2 border bg-slate-400 rounded mb-2 w-80"
         value={recipient}
         onChange={(e) => setRecipient(e.target.value)}
+        disabled={recipientEmail} // Prevents editing if recipient is pre-filled
       />
       <input
         type="text"
@@ -61,10 +65,7 @@ const Message = () => {
         value={scheduledTime}
         onChange={(e) => setScheduledTime(e.target.value)}
       />
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        onClick={handleScheduleMessage}
-      >
+      <button className="bg-blue-950 text-white px-4 py-2 rounded hover:bg-blue-800" onClick={handleScheduleMessage}>
         Schedule Message
       </button>
     </div>
@@ -72,3 +73,4 @@ const Message = () => {
 };
 
 export default Message;
+
