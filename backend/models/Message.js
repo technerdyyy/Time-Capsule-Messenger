@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
   sender: String,
-  recipient: String,
+  recipients: [String],
   subject: String,
   body: String,
   scheduledTime: Date,

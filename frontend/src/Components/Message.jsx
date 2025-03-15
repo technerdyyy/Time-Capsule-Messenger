@@ -5,19 +5,20 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Message = () => {
   const location = useLocation();
-  const recipientEmail = location.state?.recipientEmail || "";
+  const recipients = location.state?.recipients || []; // Get recipients from state 
 
-  const [recipient, setRecipient] = useState(recipientEmail);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
+
 
   const handleScheduleMessage = async () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/schedule-message`,
         {
-          recipient,
+          sender: "",
+          recipients: recipients.map((user) => user.email), // Send emails to backend
           subject,
           body,
           scheduledTime,
@@ -25,7 +26,6 @@ const Message = () => {
       );
 
       toast.success(response.data.message);
-      setRecipient("");
       setSubject("");
       setBody("");
       setScheduledTime("");
@@ -38,14 +38,15 @@ const Message = () => {
     <div className="flex flex-col items-center p-6 bg-slate-300 min-h-screen">
       <Toaster />
       <h2 className="text-2xl font-bold mb-4">Schedule a Message</h2>
-      <input
-        type="email"
-        placeholder="Recipient Email"
-        className="p-2 border bg-slate-400 rounded mb-2 w-80"
-        value={recipient}
-        onChange={(e) => setRecipient(e.target.value)}
-        disabled={recipientEmail} // Prevents editing if recipient is pre-filled
-      />
+
+      {/* Display selected recipients */}
+      <div className="bg-slate-400 p-2 border rounded mb-4 w-80">
+        <h3 className="font-semibold mb-2">Recipients:</h3>
+        {recipients.map((user) => (
+          <p key={user._id} className="text-sm">{user.email}</p>
+        ))}
+      </div>
+
       <input
         type="text"
         placeholder="Subject"
@@ -65,7 +66,11 @@ const Message = () => {
         value={scheduledTime}
         onChange={(e) => setScheduledTime(e.target.value)}
       />
-      <button className="bg-blue-950 text-white px-4 py-2 rounded hover:bg-blue-800" onClick={handleScheduleMessage}>
+
+      <button
+        className="bg-blue-950 text-white px-4 py-2 rounded hover:bg-[#03435A]"
+        onClick={handleScheduleMessage}
+      >
         Schedule Message
       </button>
     </div>
@@ -73,4 +78,3 @@ const Message = () => {
 };
 
 export default Message;
-

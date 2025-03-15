@@ -6,11 +6,11 @@ const router = express.Router();
 // Schedule a message
 router.post("/schedule-message", async (req, res) => {
   try {
-    const { sender, recipient, subject, body, scheduledTime } = req.body;
+    const { sender, recipients, subject, body, scheduledTime } = req.body;
 
     const newMessage = new Message({
       sender,
-      recipient,
+      recipients,
       subject,
       body,
       scheduledTime

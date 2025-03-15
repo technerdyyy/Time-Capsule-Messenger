@@ -23,16 +23,16 @@ cron.schedule("* * * * *", async () => {
     try {
       await transporter.sendMail({
         from: message.sender,
-        to: message.recipient,
+        to: message.recipients,
         subject: message.subject,
         text: message.body
       });
 
       message.sent = true;
       await message.save();
-      console.log(`Message sent to ${message.recipient}`);
+      console.log(`Message sent to ${message.recipients}`);
     } catch (error) {
-      console.error(`Failed to send message to ${message.recipient}:`, error);
+      console.error(`Failed to send message to ${message.recipients}:`, error);
     }
   }
 });
