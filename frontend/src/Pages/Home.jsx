@@ -11,14 +11,15 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log("redux user", user);
+  console.log("redux user", user);
   const fetchUserDetails = async () => {
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
-      const response = await axios.get({
-        url: URL,
-        withCredentials: true,
-      });
+      const response = await axios.get(URL, { withCredentials: true });
+      if (!response.data || !response.data.data) {
+        console.error("Invalid response format:", response);
+        return;
+      }
 
       dispatch(setUser(response.data.data));
 

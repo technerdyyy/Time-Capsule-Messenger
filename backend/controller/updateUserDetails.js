@@ -9,10 +9,10 @@ async function updateUserDetails(request,response){
 
        const { name } = request.body
        
-       const updateUser = await UserModel.updateOne( {
-          name
-       })
-
+       const updateUser = await UserModel.updateOne({ _id : user._id },{
+            name,
+        })
+const userInformation = await UserModel.findById(user._id)
      
 
      return response.json({

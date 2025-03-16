@@ -38,11 +38,11 @@ const Register = () => {
           email: "",
           password: "",
         });
-        navigate("/email");
+        navigate("email");
       }
     } catch (error) {
-      console.error("Error:", error.response || error.message);
-      toast.error(error?.response?.data?.message || "Something went wrong!");
+      // console.error("Error:", error.response || error.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
