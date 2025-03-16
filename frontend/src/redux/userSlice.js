@@ -1,4 +1,21 @@
-// import { createSlice } from "@reduxjs/toolkit";
+
+// ------------------------------------------------------------>
+// // Function to safely retrieve user data from localStorage
+// const getUserFromLocalStorage = () => {
+//   try {
+//     const storedUser = localStorage.getItem("user");
+//     return storedUser && storedUser !== "undefined" ? JSON.parse(storedUser) : null;
+//   } catch (error) {
+//     console.error("Error parsing user from localStorage:", error);
+//     return null;
+//   }
+// };
+
+// // Function to safely retrieve token from localStorage
+// const getTokenFromLocalStorage = () => {
+//   const storedToken = localStorage.getItem("token");
+//   return storedToken && storedToken !== "undefined" ? storedToken : null;
+// };
 
 // const initialState = {
 //   user: JSON.parse(localStorage.getItem("user")) || null,
@@ -29,9 +46,47 @@
 // export const { setUser, setToken, logout } = userSlice.actions;
 // export default userSlice.reducer;
 
+//-------------------------------------------------------------->
+// edit user details
+
+// const initialState = {
+//   user: {
+//     _id : "",
+//   name : "",
+//   email: "",
+//   token : "",
+//   }
+  
+// }
+
+// export const userSlice = createSlice({
+//   name: 'user',
+//   initialState,
+//   reducers: {
+//     setUser : (state,action)=>{
+//         state._id = action.payload._id
+//         state.name = action.payload.name
+//         state.email = action.payload.email
+//     },
+//     setToken : (state,action)=>{
+//         state.token = action.payload
+//     },
+//     logout : (state,action)=>{
+//         state._id = ""
+//         state.name = ""
+//         state.email = ""
+//         state.token = ""
+        
+//     },
+//   },
+// })
+
+// // Action creators are generated for each case reducer function
+// export const { setUser, setToken ,logout } = userSlice.actions
+
+// export default userSlice.reducer
 
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie"; 
 
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
