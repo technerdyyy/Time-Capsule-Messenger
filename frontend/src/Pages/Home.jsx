@@ -40,7 +40,7 @@ const Home = () => {
   // };
 
   const fetchUserDetails = async () => {
-    const token = localStorage.getItem("token"); // ✅ Fetch token from storage
+    const token = localStorage.getItem("token"); // Fetch token from storage
 
     if (!token) {
       console.log("No token found, redirecting to /email...");
@@ -51,7 +51,7 @@ const Home = () => {
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
       const response = await axios.get(URL, {
-        headers: { Authorization: `Bearer ${token}` }, // ✅ Send token
+        headers: { Authorization: `Bearer ${token}` }, // Send token
         withCredentials: true,
       });
 
@@ -62,7 +62,7 @@ const Home = () => {
         return;
       }
 
-      dispatch(setUser(response.data.data)); // ✅ Update Redux with user
+      dispatch(setUser(response.data.data)); // Update Redux with user
 
       if (response.data.logout) {
         dispatch(logout());
@@ -70,7 +70,7 @@ const Home = () => {
       }
     } catch (error) {
       console.log("Error fetching user details:", error);
-      navigate("/email"); // ✅ Redirect only if error occurs
+      navigate("/email"); // Redirect only if error occurs
     }
   };
 

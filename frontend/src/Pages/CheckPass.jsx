@@ -14,10 +14,6 @@ const CheckPass = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  // const token = useSelector((state) => state.user.token); // Get token from Redux
-
-  // const [userId, setUserId] = useState(null);
-  // const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (!location?.state?.name) {
@@ -36,26 +32,9 @@ const CheckPass = () => {
     });
   };
 
-  // Redirect to homepage if token exists
-  // useEffect(() => {
-  //   const storedUserId = localStorage.getItem("userId");
-  //   if (!storedUserId) {
-  //     toast.error("User ID missing. Please verify your email first.");
-  //     navigate("/email");
-  //   } else {
-  //     setUserId(storedUserId);
-  //   }
-  // }, [navigate]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // if (!userId) {
-    //   toast.error("User ID is missing. Please verify your email first.");
-    //   navigate("/email");
-    //   return;
-    // }
 
     const URL = `${import.meta.env.VITE_BACKEND_URL}/api/password`;
 
@@ -90,33 +69,6 @@ const CheckPass = () => {
       toast.error(error?.response?.data?.message);
     }
   };
-
-  //   try {
-  //     const response = await axios.post(
-  //       URL,
-  //       { password, userId }, // Now `userId` is always set
-  //       { withCredentials: true }
-  //     );
-
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-
-  //       // ✅ Store in Redux
-  //       dispatch(setToken(response.data.token));
-  //       dispatch(setUser(response.data.user));
-
-  //       // ✅ Store in localStorage
-  //       localStorage.setItem("token", response.data.token);
-  //       localStorage.setItem("user", JSON.stringify(response.data.user));
-
-  //       setPassword("");
-  //       navigate("/");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error.response || error.message);
-  //     toast.error(error?.response?.data?.message || "Something went wrong!");
-  //   }
-  // };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#E1E5F2]">

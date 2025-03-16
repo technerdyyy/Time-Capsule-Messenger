@@ -5,12 +5,10 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Message = () => {
   const location = useLocation();
-  const recipients = location.state?.recipients || []; // Get recipients from state 
-
+  const recipients = location.state?.recipients || []; // Get recipients from state
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
-
 
   const handleScheduleMessage = async () => {
     try {
@@ -43,7 +41,9 @@ const Message = () => {
       <div className="bg-slate-400 p-2 border rounded mb-4 w-80">
         <h3 className="font-semibold mb-2">Recipients:</h3>
         {recipients.map((user) => (
-          <p key={user._id} className="text-sm">{user.email}</p>
+          <p key={user._id} className="text-sm">
+            {user.email}
+          </p>
         ))}
       </div>
 

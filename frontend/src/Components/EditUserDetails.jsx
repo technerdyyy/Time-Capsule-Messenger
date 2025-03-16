@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/userSlice";
 
 const EditUserDetails = ({ onClose }) => {
-  const { user } = useSelector((state) => state.user); // ✅ Get user from Redux
+  const { user } = useSelector((state) => state.user); // Get user from Redux
   const dispatch = useDispatch();
 
   const [data, setData] = useState({

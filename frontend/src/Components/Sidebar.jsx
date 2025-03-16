@@ -22,19 +22,6 @@ const Sidebar = () => {
     dispatch(logout());
     localStorage.clear();
     navigate("/email");
-
-    // Dispatch to reset Redux state
-
-    // dispatch(setToken(null)); // Clear token from Redux
-    // dispatch(setUser(null)); // Clear user data from Redux
-
-    // // Clear data from localStorage
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("userId");
-
-    // // Redirect to email page
-    // navigate("/email", { replace: true });
   };
 
   const handleOpenEditUser = () => {

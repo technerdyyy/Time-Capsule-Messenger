@@ -42,29 +42,6 @@ const CheckEmail = () => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-
-  //   const URL = `${import.meta.env.VITE_BACKEND_URL}/api/email`;
-
-  //   try {
-  //     const response = await axios.post(URL, { email: data.email });
-
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-  //       localStorage.setItem("userId", response?.data?.data?._id);
-  //       localStorage.setItem("user", JSON.stringify(response?.data?.data));
-  //       navigate("/password"); // Proceed to password page
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error.response || error.message);
-  //     toast.error(error?.response?.data?.message || "Something went wrong!");
-  //   }
-  // };
-
   return (
     <div className="flex flex-col justify-start items-center min-h-screen bg-[#E1E5F2] pt-20">
       <img src={userImg} alt="user-icon" className="w-20 h-20 mb-10" />
