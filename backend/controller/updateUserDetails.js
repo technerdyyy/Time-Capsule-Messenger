@@ -1,32 +1,38 @@
-const getUserDetailsFromToken = require('../helpers/getUserDetailsFromToken')
-const UserModel = require('../models/UserModel')
+const getUserDetailsFromToken = require("../helpers/getUserDetailsFromToken");
+const UserModel = require("../models/UserModel");
 
-async function updateUserDetails(request,response){
-    try {
-        const token = request.cookies.token || ""
+async function updateUserDetails(req, res) {
+  try {
+    const token = req.cookies.token || "";
 
-        const user = await getUserDetailsFromToken(token)
-
-       const { name } = request.body
-       
-       const updateUser = await UserModel.updateOne({ _id : user._id },{
-            name,
-        })
-const userInformation = await UserModel.findById(user._id)
-     
-
-     return response.json({
-        message : "user updated successfully",
-        data : userInformation,
-        success : true
-     })
-
-    } catch (error) {
-       return response.status(500).json({
-        message : error.message || error,
-        error : true
-       }) 
+    const user = await getUserDetailsFromToken(token);
+    if (!user) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
     }
+
+    const { name } = req.body;
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      user._id,
+      { name },
+      { new: true } // Return updated user
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    return res.json({
+      message: "User updated successfully",
+      data: updatedUser,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      error: true,
+    });
+  }
 }
 
-module.exports = updateUserDetails
+module.exports = updateUserDetails;

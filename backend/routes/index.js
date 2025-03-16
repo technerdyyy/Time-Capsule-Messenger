@@ -28,7 +28,7 @@ router.get("/user-details", userDetails);
 router.get("/logout", logout);
 
 // Update user details using Mongoose
-router.post("/update-user", updateUserDetails);
+router.put("/update-user", updateUserDetails);
 
 //search-user
 router.post("/search-user", searchUser)
