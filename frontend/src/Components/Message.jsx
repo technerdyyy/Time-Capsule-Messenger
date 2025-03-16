@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Message = () => {
   const location = useLocation();
-  const recipients = location.state?.recipients || []; // Get recipients from state
+  const recipients = location.state?.recipients || []; 
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
@@ -16,7 +16,7 @@ const Message = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/schedule-message`,
         {
           sender: "",
-          recipients: recipients.map((user) => user.email), // Send emails to backend
+          recipients: recipients.map((user) => user.email), 
           subject,
           body,
           scheduledTime,

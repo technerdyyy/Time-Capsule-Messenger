@@ -46,7 +46,6 @@ const EditUserDetails = ({ onClose }) => {
 
       const response = await axios.put(URL, data, { withCredentials: true });
       console.log("API Response:", response.data);
-      // toast.success(response?.data?.message);
 
       if (response.data.success && response.data.data) {
         dispatch(setUser(response.data.data));
