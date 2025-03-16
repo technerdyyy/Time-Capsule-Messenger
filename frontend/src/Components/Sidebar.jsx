@@ -123,7 +123,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LuArrowUpLeft } from "react-icons/lu";
 import SearchUser from "./SearchUser";
 import { logout } from "../redux/userSlice";
-import Cookies from "js-cookie"; // Import js-cookie
+import Cookies from "js-cookie"; 
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.user);
@@ -135,7 +135,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    Cookies.remove("token"); // Clear token from cookies
+    Cookies.remove("token"); 
     navigate("/email");
   };
 

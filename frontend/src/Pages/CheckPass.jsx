@@ -123,7 +123,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/userSlice";
-import Cookies from "js-cookie"; // Import js-cookie
+import Cookies from "js-cookie"; 
 
 const CheckPass = () => {
   const [data, setData] = useState({
@@ -166,7 +166,7 @@ const CheckPass = () => {
 
       if (response.data.success) {
         dispatch(setToken(response?.data?.token));
-        Cookies.set("token", response?.data?.token, { expires: 7 }); // Store token in cookies for 7 days
+        Cookies.set("token", response?.data?.token, { expires: 7 }); 
 
         setTimeout(() => {
           navigate("/");

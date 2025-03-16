@@ -126,7 +126,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, logout } from "../redux/userSlice";
 import Sidebar from "../Components/Sidebar";
-import Cookies from "js-cookie"; // Import js-cookie
+import Cookies from "js-cookie"; 
 
 const Home = () => {
   const { user } = useSelector((state) => state.user);
@@ -137,7 +137,7 @@ const Home = () => {
   console.log("redux user", user);
 
   const fetchUserDetails = async () => {
-    const token = Cookies.get("token"); // Fetch token from cookies
+    const token = Cookies.get("token"); 
 
     if (!token) {
       console.log("No token found, redirecting to /email...");
@@ -148,7 +148,7 @@ const Home = () => {
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
       const response = await axios.get(URL, {
-        headers: { Authorization: `Bearer ${token}` }, // Send token
+        headers: { Authorization: `Bearer ${token}` }, 
         withCredentials: true,
       });
 
@@ -159,7 +159,7 @@ const Home = () => {
         return;
       }
 
-      dispatch(setUser(response.data.data)); // Update Redux with user
+      dispatch(setUser(response.data.data)); 
 
       if (response.data.logout) {
         dispatch(logout());
@@ -167,7 +167,7 @@ const Home = () => {
       }
     } catch (error) {
       console.log("Error fetching user details:", error);
-      navigate("/email"); // Redirect only if error occurs
+      navigate("/email"); 
     }
   };
 

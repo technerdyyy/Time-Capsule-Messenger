@@ -31,7 +31,7 @@
 
 
 import { createSlice } from "@reduxjs/toolkit";
-import Cookies from "js-cookie"; // Import js-cookie
+import Cookies from "js-cookie"; 
 
 const initialState = {
   user: Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
@@ -45,7 +45,7 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       if (action.payload) {
         state.user = action.payload;
-        Cookies.set("user", JSON.stringify(action.payload), { expires: 7 }); // Store user for 7 days
+        Cookies.set("user", JSON.stringify(action.payload), { expires: 7 }); 
       }
     },
     setToken: (state, action) => {

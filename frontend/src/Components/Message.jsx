@@ -27,7 +27,7 @@ const Message = () => {
       setSubject("");
       setBody("");
       setScheduledTime("");
-    } catch (error) {
+     } catch (error) {
       toast.error("Failed to schedule message");
     }
   };
