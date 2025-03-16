@@ -1,4 +1,3 @@
-import { createSlice } from "@reduxjs/toolkit";
 
 // ------------------------------------------------------------>
 // // Function to safely retrieve user data from localStorage
@@ -91,6 +90,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // export const { setUser, setToken ,logout } = userSlice.actions
 
 // export default userSlice.reducer
+
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: JSON.parse(localStorage.getItem("user")) || null,
