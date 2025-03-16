@@ -12,7 +12,7 @@ import SearchUser from "./SearchUser";
 import { logout } from "../redux/userSlice";
 
 const Sidebar = () => {
-  const user = useSelector((state) => state?.user);
+  const { user } = useSelector((state) => state.user);
   const [editUserOpen, setEditUserOpen] = useState(false);
   const [allUser, setAllUser] = useState([]);
   const [openSearchUser, setOpenSearchUser] = useState(false);
@@ -20,8 +20,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/email");
     localStorage.clear();
+    navigate("/email");
 
     // Dispatch to reset Redux state
 
@@ -35,6 +35,14 @@ const Sidebar = () => {
 
     // // Redirect to email page
     // navigate("/email", { replace: true });
+  };
+
+  const handleOpenEditUser = () => {
+    if (user && user._id) {
+      setEditUserOpen(true);
+    } else {
+      console.log("User data not loaded yet.");
+    }
   };
 
   return (
@@ -65,7 +73,7 @@ const Sidebar = () => {
           <button
             className="mx-auto"
             title={user?.name}
-            onClick={() => setEditUserOpen(true)}
+            onClick={handleOpenEditUser}
           >
             <FaCircleUser size={35} />
           </button>
@@ -103,7 +111,7 @@ const Sidebar = () => {
 
       {/* edit user details */}
       {editUserOpen && (
-        <EditUserDetails onClose={() => setEditUserOpen(false)} user={user} />
+        <EditUserDetails onClose={() => setEditUserOpen(false)} />
       )}
 
       {/* search user */}

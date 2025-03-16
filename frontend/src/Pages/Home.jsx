@@ -6,29 +6,71 @@ import { setUser, logout } from "../redux/userSlice";
 import Sidebar from "../Components/Sidebar";
 
 const Home = () => {
-  const user = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log("redux user", user);
+  console.log("redux user", user);
+
+  // const fetchUserDetails = async () => {
+  //   if (!user.token) {
+  //     navigate("/email"); // Redirect if no token exists
+  //     return;
+  //   }
+  //   try {
+  //     const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
+  //     const response = await axios.get(URL, { withCredentials: true });
+  //     if (!response.data || !response.data.data) {
+  //       console.error("Invalid response format:", response);
+  //       return;
+  //     }
+
+  //     dispatch(setUser(response.data.data));
+
+  //     if (response.data.logout) {
+  //       console.log("fetchUserDetails response:", response.data);
+  //       dispatch(logout());
+  //       navigate("/email");
+  //     }
+  //     // console.log("current user details", response);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
+
   const fetchUserDetails = async () => {
+    const token = localStorage.getItem("token"); // ✅ Fetch token from storage
+
+    if (!token) {
+      console.log("No token found, redirecting to /email...");
+      navigate("/email");
+      return;
+    }
+
     try {
       const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
-      const response = await axios.get({
-        url: URL,
+      const response = await axios.get(URL, {
+        headers: { Authorization: `Bearer ${token}` }, // ✅ Send token
         withCredentials: true,
       });
 
-      dispatch(setUser(response.data.data));
+      console.log("fetchUserDetails response:", response.data);
+
+      if (!response.data || !response.data.data) {
+        console.error("Invalid response format:", response);
+        return;
+      }
+
+      dispatch(setUser(response.data.data)); // ✅ Update Redux with user
 
       if (response.data.logout) {
         dispatch(logout());
         navigate("/email");
       }
-      // console.log("current user details", response);
     } catch (error) {
-      console.log("error", error);
+      console.log("Error fetching user details:", error);
+      navigate("/email"); // ✅ Redirect only if error occurs
     }
   };
 

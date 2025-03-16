@@ -7,6 +7,7 @@ const  checkPassword  = require("../controller/checkPassword");
 const userDetails = require("../controller/userDetails");
 const logout = require("../controller/logout");
 const searchUser = require("../controller/searchUser");
+const updateUserDetails = require("../controller/updateUserDetails");
 
 // const authenticateUser = require("../controller/checkPassword");
 const router = express.Router();
@@ -27,36 +28,7 @@ router.get("/user-details", userDetails);
 router.get("/logout", logout);
 
 // Update user details using Mongoose
-router.post("/update-user", async (req, res) => {
-  try {
-    const { email, name } = req.body;
-
-    if (!email) {
-      return res.status(400).json({ error: "Email is required to update user" });
-    }
-
-    const updatedUser = await User.findOneAndUpdate(
-      { email: email },
-      { name: name },
-      { new: true }
-    );
-
-    if (!updatedUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.status(200).json({
-      message: "User updated successfully",
-      success: true,
-      updatedUser, // Return updated user data
-    });
-
-  } catch (error) {
-    console.error("Update error:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
-
+router.put("/update-user", updateUserDetails);
 
 //search-user
 router.post("/search-user", searchUser)

@@ -1,67 +1,122 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../redux/userSlice";
 
 const CheckPass = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.user.token); // Get token from Redux
+  const [data, setData] = useState({
+    password: "",
+    userId: "",
+  });
 
-  const [userId, setUserId] = useState(null);
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  // const token = useSelector((state) => state.user.token); // Get token from Redux
+
+  // const [userId, setUserId] = useState(null);
+  // const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (!location?.state?.name) {
+      navigate("/email");
+    }
+  }, []);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
+  };
 
   // Redirect to homepage if token exists
-  useEffect(() => {
-    if (token) {
-      navigate("/", { replace: true });
-    }
-  }, [token, navigate]);
+  // useEffect(() => {
+  //   const storedUserId = localStorage.getItem("userId");
+  //   if (!storedUserId) {
+  //     toast.error("User ID missing. Please verify your email first.");
+  //     navigate("/email");
+  //   } else {
+  //     setUserId(storedUserId);
+  //   }
+  // }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
-    const storedUserId = localStorage.getItem("userId");
-    const storedUser = localStorage.getItem("user");
-
-    if (!storedUserId || !storedUser) {
-      toast.error(
-        "User ID or User data missing. Please verify your email first."
-      );
-      navigate("/email"); // Redirect if userId or user data doesn't exist
-    } else {
-      setUserId(storedUserId); // Set userId here
-    }
+    // if (!userId) {
+    //   toast.error("User ID is missing. Please verify your email first.");
+    //   navigate("/email");
+    //   return;
+    // }
 
     const URL = `${import.meta.env.VITE_BACKEND_URL}/api/password`;
 
     try {
-      const response = await axios.post(
-        URL,
-        { password, userId: storedUserId }, // Use storedUserId directly
-        { withCredentials: true }
-      );
+      const response = await axios({
+        method: "post",
+        url: URL,
+        data: {
+          userId: location?.state?._id,
+          password: data.password,
+        },
+        withCredentials: true,
+      });
+
+      toast.success(response.data.message);
 
       if (response.data.success) {
-        toast.success(response.data.message);
-
-        // Dispatch token and user to Redux and store them in localStorage
         dispatch(setToken(response?.data?.token));
-        dispatch(setUser(response?.data?.user)); // ✅ Store user details
-
         localStorage.setItem("token", response?.data?.token);
-        localStorage.setItem("user", JSON.stringify(response?.data?.user));
+        // console.log("Stored Token:", localStorage.getItem("token"));
 
-        setPassword(""); // Clear the password field after successful login
-        navigate("/"); // Redirect to homepage after successful login
+        setTimeout(() => {
+          navigate("/");
+        }, 100);
+
+        // setData({
+        //   password: "",
+        // });
+        // navigate("/");
       }
     } catch (error) {
-      console.error("Error:", error.response || error.message);
-      toast.error(error?.response?.data?.message || "Something went wrong!");
+      toast.error(error?.response?.data?.message);
     }
   };
+
+  //   try {
+  //     const response = await axios.post(
+  //       URL,
+  //       { password, userId }, // Now `userId` is always set
+  //       { withCredentials: true }
+  //     );
+
+  //     if (response.data.success) {
+  //       toast.success(response.data.message);
+
+  //       // ✅ Store in Redux
+  //       dispatch(setToken(response.data.token));
+  //       dispatch(setUser(response.data.user));
+
+  //       // ✅ Store in localStorage
+  //       localStorage.setItem("token", response.data.token);
+  //       localStorage.setItem("user", JSON.stringify(response.data.user));
+
+  //       setPassword("");
+  //       navigate("/");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error.response || error.message);
+  //     toast.error(error?.response?.data?.message || "Something went wrong!");
+  //   }
+  // };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-[#E1E5F2]">
@@ -79,8 +134,9 @@ const CheckPass = () => {
               type="password"
               id="password"
               name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={data.password}
+              // onChange={(e) => setPassword(e.target.value)}
+              onChange={handleOnChange}
               required
               className="w-full p-3 border rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-lg"
             />
