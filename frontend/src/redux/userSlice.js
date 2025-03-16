@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// ------------------------------------------------------------>
 // // Function to safely retrieve user data from localStorage
 // const getUserFromLocalStorage = () => {
 //   try {
@@ -51,39 +52,72 @@ import { createSlice } from "@reduxjs/toolkit";
 // export const { setUser, setToken, logout } = userSlice.actions;
 // export default userSlice.reducer;
 
-const initialState = {
-  user: {
-    _id : "",
-  name : "",
-  email: "",
-  token : "",
-  }
-  
-}
+//-------------------------------------------------------------->
+// edit user details
 
-export const userSlice = createSlice({
-  name: 'user',
+// const initialState = {
+//   user: {
+//     _id : "",
+//   name : "",
+//   email: "",
+//   token : "",
+//   }
+  
+// }
+
+// export const userSlice = createSlice({
+//   name: 'user',
+//   initialState,
+//   reducers: {
+//     setUser : (state,action)=>{
+//         state._id = action.payload._id
+//         state.name = action.payload.name
+//         state.email = action.payload.email
+//     },
+//     setToken : (state,action)=>{
+//         state.token = action.payload
+//     },
+//     logout : (state,action)=>{
+//         state._id = ""
+//         state.name = ""
+//         state.email = ""
+//         state.token = ""
+        
+//     },
+//   },
+// })
+
+// // Action creators are generated for each case reducer function
+// export const { setUser, setToken ,logout } = userSlice.actions
+
+// export default userSlice.reducer
+
+const initialState = {
+  user: JSON.parse(localStorage.getItem("user")) || null,
+  token: localStorage.getItem("token") || null, // ✅ Load token from localStorage
+};
+
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
-    setUser : (state,action)=>{
-        state._id = action.payload._id
-        state.name = action.payload.name 
-        state.email = action.payload.email 
+    setUser: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
-    setToken : (state,action)=>{
-        state.token = action.payload
+    setToken: (state, action) => {
+      state.token = action.payload;
+      localStorage.setItem("token", action.payload);
     },
-    logout : (state,action)=>{
-        state._id = ""
-        state.name = ""
-        state.email = ""
-        state.token = ""
-        
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     },
   },
-})
+});
 
-// Action creators are generated for each case reducer function
-export const { setUser, setToken ,logout } = userSlice.actions
+export const { setUser, setToken, logout } = userSlice.actions;
+export default userSlice.reducer;
 
-export default userSlice.reducer

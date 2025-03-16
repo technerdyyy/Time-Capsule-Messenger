@@ -75,11 +75,16 @@ const CheckPass = () => {
       if (response.data.success) {
         dispatch(setToken(response?.data?.token));
         localStorage.setItem("token", response?.data?.token);
+        // console.log("Stored Token:", localStorage.getItem("token"));
 
-        setData({
-          password: "",
-        });
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 100);
+
+        // setData({
+        //   password: "",
+        // });
+        // navigate("/");
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
