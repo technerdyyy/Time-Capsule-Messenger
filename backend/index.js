@@ -4,7 +4,6 @@ require('dotenv').config()
 const connectDB = require('./config/connectDB')
 const router = require('./routes/index')
 const cookiesParser = require('cookie-parser')
-const messageRoutes = require("./routes/messages");
 const startCronJob = require("./cronJobs/sendScheduledMessages");
 
 const app = express()
@@ -20,17 +19,16 @@ const PORT = process.env.PORT || 8080
 
 app.get('/',(request, response)=>{
   response.json({
-     message: "server running at" + PORT 
+     message: "server running at " + PORT 
   })
 })
 
 //api endpoints
 app.use('/api',router)
 
-app.use("/api", messageRoutes);
-
 connectDB().then(() => {
   console.log("mongodb connection successful")
+  startCronJob()
 app.listen(PORT, ()=>{
     console.log("server running at" + PORT)
 })

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Message = () => {
   const location = useLocation();
@@ -10,15 +11,20 @@ const Message = () => {
   const [body, setBody] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
 
+  const { user } = useSelector((state) => state.user);
+
   const handleScheduleMessage = async () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/schedule-message`,
         {
-          sender: "",
+          sender: {
+            name: user?.name, // Include sender's name
+            email: user?.email, // Include sender's email
+          },
           recipients: recipients.map((user) => user.email), // Send emails to backend
           subject,
-          body,
+          body: `${user?.name} (${user?.email}) sent this to you:\n\n${body}`, // Include sender info in message
           scheduledTime,
         }
       );
